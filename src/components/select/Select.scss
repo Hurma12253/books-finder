@@ -1,0 +1,13 @@
+.select {
+	appearance: none;
+	border: 0;
+	outline: 0;
+	background: 0;
+	color: $select-color;
+	font-size: 18px;
+
+	&__label {
+		color: $select-label-color;
+		font-size: 18px;
+	}
+}

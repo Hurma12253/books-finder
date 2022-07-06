@@ -1,4 +1,9 @@
 @import './base/zeroing.scss';
 @import './base/variables';
+@import './mixins/mixins.scss';
 @import '../components/container/Container.scss';
 @import '../components/header/Header.scss';
+@import '../components/search/Search.scss';
+@import '../components/button/Button.scss';
+@import '../components/select/Select.scss';
+@import './pages/Home.scss';

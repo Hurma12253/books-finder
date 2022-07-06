@@ -1,0 +1,23 @@
+.home {
+	&__container {
+		padding-top: 44px;
+	}
+
+	&__selects {
+		padding: 30px 8px;
+	}
+}
+
+.selects {
+	&__control:first-child {
+		margin-right: 15px;
+	}
+
+	&__block {
+		display: flex;
+
+		@include media-mobile {
+			flex-direction: column;
+		}
+	}
+}
