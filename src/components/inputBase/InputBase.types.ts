@@ -1,3 +1,4 @@
 import { InputHTMLAttributes } from 'react'
 
-export interface IInputBase extends InputHTMLAttributes<HTMLInputElement> {}
+export interface IInputBaseProps
+	extends InputHTMLAttributes<HTMLInputElement> {}
