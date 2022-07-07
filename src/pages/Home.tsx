@@ -47,6 +47,9 @@ const Home: React.FC = () => {
 							<option value="architecture">architecture</option>
 						</Select>
 					</div>
+					<div className="selects__block">
+						<div className="books-found">Found: 304 books</div>
+					</div>
 				</div>
 			</form>
 		</Container>

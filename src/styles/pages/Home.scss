@@ -4,6 +4,8 @@
 	}
 
 	&__selects {
+		display: flex;
+		justify-content: space-between;
 		padding: 30px 8px;
 	}
 }
@@ -20,4 +22,9 @@
 			flex-direction: column;
 		}
 	}
+}
+
+.books-found {
+	font-size: 18px;
+	color: $pink-color;
 }
