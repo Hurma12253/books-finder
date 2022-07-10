@@ -7,9 +7,11 @@ import { searchBooksAction } from 'store/books/actions'
 import { CategoryParam, OrderByParam } from 'api/type'
 import { useSelector } from 'react-redux'
 import { getBooksState } from 'store/books/getters'
+import BookCard from 'components/bookCard'
+import { trimString } from 'utils/trimString'
 
 const Home: React.FC = () => {
-	const { booksCount } = useSelector(getBooksState)
+	const { books, booksCount } = useSelector(getBooksState)
 	const dispatch = useDispatch()
 	const formRef = React.createRef<HTMLFormElement>()
 
@@ -78,6 +80,30 @@ const Home: React.FC = () => {
 					</div>
 				</div>
 			</form>
+			<div className="home__books-container">
+				{books.map((book) => {
+					const bookInfo = book.volumeInfo
+					const link = `/book/${book.id}`
+
+					return (
+						<BookCard
+							key={book.id}
+							link={link}
+							category={
+								bookInfo.categories && bookInfo.categories[0]
+							}
+							author={bookInfo.authors && bookInfo.authors[0]}
+							imageLink={
+								bookInfo.imageLinks &&
+								bookInfo.imageLinks.smallThumbnail
+							}
+							bookName={
+								bookInfo.title && trimString(bookInfo.title, 40)
+							}
+						/>
+					)
+				})}
+			</div>
 		</Container>
 	)
 }

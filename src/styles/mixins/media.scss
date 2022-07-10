@@ -1,0 +1,25 @@
+@mixin media-mobile {
+	@media screen and (max-width: $mobile-breakpoint) {
+		@content;
+	}
+}
+
+@mixin media-card-3 {
+	@media screen and (max-width: $cards-3-breakpont) {
+		@content;
+	}
+}
+
+@mixin media-card-2 {
+	@media screen and (max-width: $cards-2-breakpont) {
+		@content;
+	}
+}
+
+@mixin media-card-1 {
+	@media screen and (max-width: $cards-1-breakpont) {
+		@content;
+	}
+}
+
+
