@@ -7,11 +7,18 @@ const axiosConfig: AxiosRequestConfig = {
 
 const axiosInstance = axios.create(axiosConfig)
 
-const searchBooks = ({ search, orderBy, category }: ISearchBooksParams) => {
+const searchBooks = ({
+	search,
+	orderBy,
+	category,
+	startIndex,
+}: ISearchBooksParams) => {
 	return axiosInstance.get<ISearchBooksResponse>(``, {
 		params: {
 			q: `${search}${category !== 'all' ? `+subject:${category}` : ''}`,
 			orderBy,
+			maxResults: 8,
+			startIndex,
 		},
 	})
 }

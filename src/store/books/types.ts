@@ -6,6 +6,9 @@ export interface IBooksState {
 	booksCount: number
 	isLoading: boolean
 	error: string | null
+	touched: boolean
+	isLoadMore: boolean
+	currentIndex: number
 }
 
 export interface ISearchBooksAction {
@@ -24,7 +27,28 @@ export interface ISearchBooksFailureAction {
 	error: string
 }
 
+export interface ILoadMoreAction {
+	type: BooksActions.LOAD_MORE_ACTION
+	payload: ISearchBooksParams
+}
+export interface ILoadMoreRequestAction {
+	type: BooksActions.LOAD_MORE_REQUEST_ACTION
+}
+export interface ILoadMoreSuccessAction {
+	type: BooksActions.LOAD_MORE_SUCCESS_ACTION
+	payload: ISearchBooksResponse
+}
+export interface ILoadMoreFailureAction {
+	type: BooksActions.LOAD_MORE_FAILURE_ACTION
+	payload: {
+		error: string
+	}
+}
+
 export type BooksActionsUnion =
 	| ISearchBooksRequestAction
 	| ISearchBooksSuccessAction
 	| ISearchBooksFailureAction
+	| ILoadMoreRequestAction
+	| ILoadMoreSuccessAction
+	| ILoadMoreFailureAction

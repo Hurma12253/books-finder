@@ -14,6 +14,7 @@
 		grid-template-columns: repeat(4, 1fr);
 		gap: 20px;
 		justify-content: center;
+		margin-bottom: 20px;
 
 		@include media-card-3 {
 			grid-template-columns: repeat(3, 1fr);
@@ -26,6 +27,11 @@
 		@include media-card-1 {
 			grid-template-columns: 320px;
 		}
+	}
+
+	&__load-more-button-container {
+		display: flex;
+		justify-content: center;
 	}
 }
 

@@ -2,6 +2,7 @@ export interface ISearchBooksParams {
 	search: string
 	orderBy: OrderByParam
 	category: CategoryParam
+	startIndex: number
 }
 
 export type CategoryParam =

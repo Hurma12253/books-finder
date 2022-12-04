@@ -2,5 +2,5 @@ import { ButtonHTMLAttributes, ReactNode } from 'react'
 
 export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	children?: ReactNode
-	variant: 'icon' | 'primary'
+	variant: 'icon' | 'primary' | 'secondary'
 }
