@@ -1,24 +1,38 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import {
+	createSearchParams,
+	useNavigate,
+	useSearchParams,
+} from 'react-router-dom'
 import Container from 'components/container'
 import Search from 'components/search'
 import Select from 'components/select'
 import { useDispatch } from 'react-redux'
 import { loadMoreAction, searchBooksAction } from 'store/books/actions'
-import { CategoryParam, OrderByParam } from 'api/type'
+import { CategoryParams, OrderByParams } from 'api/type'
 import { useSelector } from 'react-redux'
 import { getBooksState } from 'store/books/getters'
 import BookCard from 'components/bookCard'
 import { trimString } from 'utils/trimString'
 import Button from 'components/button'
+import { isInEnum } from 'utils/isInEnum'
+import { Paths } from 'router/constants'
 
 const Home: React.FC = () => {
 	const { books, booksCount, touched, isLoadMore, currentIndex } =
 		useSelector(getBooksState)
 	const dispatch = useDispatch()
 
+	const [searchParams] = useSearchParams()
+	const navigate = useNavigate()
+
 	const [searchValue, setSearchValue] = useState<string>('')
-	const [categoryValue, setCategoryValue] = useState<CategoryParam>('all')
-	const [sortingValue, setSortingValue] = useState<OrderByParam>('relevance')
+	const [categoryValue, setCategoryValue] = useState<CategoryParams>(
+		CategoryParams.all
+	)
+	const [sortingValue, setSortingValue] = useState<OrderByParams>(
+		OrderByParams.relevance
+	)
 
 	const onSearchChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (
 		event
@@ -27,7 +41,7 @@ const Home: React.FC = () => {
 	const onCategoryChangeHandler: React.ChangeEventHandler<
 		HTMLSelectElement
 	> = (event) => {
-		const value = event.target.value as CategoryParam
+		const value = event.target.value as CategoryParams
 
 		setCategoryValue(value)
 	}
@@ -35,7 +49,7 @@ const Home: React.FC = () => {
 	const onSortingChangeHandler: React.ChangeEventHandler<
 		HTMLSelectElement
 	> = (event) => {
-		const value = event.target.value as OrderByParam
+		const value = event.target.value as OrderByParams
 
 		setSortingValue(value)
 	}
@@ -44,16 +58,26 @@ const Home: React.FC = () => {
 		onSubmitHandler()
 	}
 
-	const onSubmitHandler = () => {
-		dispatch(
-			searchBooksAction({
-				search: searchValue,
-				category: categoryValue,
-				orderBy: sortingValue,
-				startIndex: currentIndex,
-			})
-		)
-	}
+	// const onSubmitHandler = useCallback(() => {
+	// 	dispatch(
+	// 		searchBooksAction({
+	// 			search: searchValue,
+	// 			category: categoryValue,
+	// 			orderBy: sortingValue,
+	// 			startIndex: currentIndex,
+	// 		})
+	// 	)
+	// }, [searchValue, categoryValue, sortingValue, currentIndex, dispatch])
+
+	const onSubmitHandler = useCallback(() => {
+		const searchParams = createSearchParams({
+			q: searchValue,
+			category: categoryValue,
+			sorting: sortingValue,
+		})
+
+		navigate({ pathname: Paths.home, search: searchParams.toString() })
+	}, [searchValue, categoryValue, sortingValue, navigate])
 
 	const onLoadMoreHandler: React.MouseEventHandler<
 		HTMLButtonElement
@@ -67,6 +91,28 @@ const Home: React.FC = () => {
 			})
 		)
 	}
+
+	useEffect(() => {
+		const q = searchParams.get('q')
+		const category = searchParams.get('category')
+		const sorting = searchParams.get('sorting')
+
+		console.log(q, category, sorting)
+
+		if (q) {
+			setSearchValue(q)
+		}
+
+		if (category && isInEnum(category, CategoryParams)) {
+			setCategoryValue(category as CategoryParams)
+		}
+
+		if (sorting && isInEnum(sorting, OrderByParams)) {
+			setSortingValue(sorting as OrderByParams)
+		}
+
+		onSubmitHandler()
+	}, [searchParams, onSubmitHandler])
 
 	return (
 		<Container size="md" className="home__container">

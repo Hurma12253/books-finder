@@ -1,20 +1,24 @@
 export interface ISearchBooksParams {
 	search: string
-	orderBy: OrderByParam
-	category: CategoryParam
+	orderBy: OrderByParams
+	category: CategoryParams
 	startIndex: number
 }
 
-export type CategoryParam =
-	| 'all'
-	| 'art'
-	| 'biography'
-	| 'computers'
-	| 'history'
-	| 'medical'
-	| 'poetry'
+export enum CategoryParams {
+	all = 'all',
+	art = 'art',
+	biography = 'biography',
+	computers = 'computers',
+	history = 'history',
+	medical = 'medical',
+	poetry = 'poetry',
+}
 
-export type OrderByParam = 'relevance' | 'newest'
+export enum OrderByParams {
+	relevance = 'relevance',
+	newest = 'newest',
+}
 
 export interface ISearchBooksResponse {
 	kind: string
